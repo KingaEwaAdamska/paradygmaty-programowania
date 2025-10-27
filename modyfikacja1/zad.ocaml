@@ -1,0 +1,18 @@
+let rec reverse args = 
+  let i = fst args in
+  let lists = snd args in
+  let listToAdd = fst lists in
+  let endLists = snd lists in
+  let lastList = fst endLists in
+  let endList = snd endLists in
+  if fst lists == [] then reverse ((i - 1) ,(lastList, ([], endList)))
+  else if i = 0 then endList
+  else reverse (i, (List.tl listToAdd,((List.hd listToAdd :: lastList),  (List.hd listToAdd :: endList))))
+;;
+let zigZag args =
+  let list = fst args in
+  let number = snd args in
+  reverse (number, (list, ([],[])))
+;; 
+
+
