@@ -1,32 +1,28 @@
 let find (value, list) =
-  let rec loop (list, indexes, actIndex) =
+  let rec loop (index, list) =
     match list with
-    | [] -> List.rev indexes
-    | x :: xs ->
-        if x = value then
-          loop (xs, actIndex :: indexes, actIndex + 1)
-        else
-          loop (xs, indexes, actIndex + 1)
+    | [] -> []
+    | h::t -> if h = value then index :: loop (index + 1, t) else loop (index + 1, t)
   in
-  loop (list, [], 0)
+  loop (0, list)
 ;;
 
 let make_finder list =
   fun value -> find (value, list)
 ;;
 
+find (1, [])
+find (1, [1])
+find (2, [1])
+find (2, [1;2;3])
+find (3, [1;2;3;3])
+find (0, [1;1;1])
+find (5, [5;5;5;5])
+find ('a', ['a';'b';'a';'c'])
+
 let find123 = make_finder [1;2;3];;
 
-if find (1, []) = [] then print_endline "Passed" else print_endline "Not passed";;
-if find (1, [1]) = [0] then print_endline "Passed" else print_endline "Not passed";;
-if find (2, [1]) = []then print_endline "Passed" else print_endline "Not passed";;
-if find (2, [1;2;3]) = [1] then print_endline "Passed" else print_endline "Not passed";;
-if find (3, [1;2;3;3]) = [2;3] then print_endline "Passed" else print_endline "Not passed";;
-if find (0, [1;1;1]) = [] then print_endline "Passed" else print_endline "Not passed";;
-if find (5, [5;5;5;5]) = [0;1;2;3] then print_endline "Passed" else print_endline "Not passed";;
-if find ('a', ['a';'b';'a';'c']) = [0;2] then print_endline "Passed" else print_endline "Not passed";;
-
-if find123 4 = [] then print_endline "Passed" else print_endline "Not passed";;
-if find123 1 = [0] then print_endline "Passed" else print_endline "Not passed";;
-if find123 2 = [1] then print_endline "Passed" else print_endline "Not passed";;
-if find123 3 = [2] then print_endline "Passed" else print_endline "Not passed";;
+find123 4;;
+find123 1;;
+find123 2;;
+find123 3;;

@@ -3,41 +3,6 @@ let splitNRec (n, list) =
     if n = 1 then [[]]
     else [] :: (setParts (n - 1))
   in
-  let parts = setParts n in
-  let rec divideList (list, parts) = 
-    if list = [] then parts
-    else
-      let x = (List.hd parts) @ [List.hd list] in
-      divideList (List.tl list, List.tl parts @ [x])
-  in
-  divideList (list, parts)
-;;
-
-let splitNRec (n, list) = 
-  let rec append_rec list1 list2 =
-    match list1 with
-    | [] -> list2
-    | hd :: tl -> hd :: append_rec tl list2
-  in
-  let rec setParts n = 
-    if n = 1 then [[]]
-    else [] :: (setParts (n - 1))
-  in
-  let parts = setParts n in
-  let rec divideList (list, parts) = 
-    if list = [] then parts
-    else
-      let x = append_rec (List.hd parts) [List.hd list] in
-      divideList (List.tl list, append_rec (List.tl parts) [x])
-  in
-  divideList (list, parts)
-;;
-
-let splitNRec (n, list) = 
-  let rec setParts n = 
-    if n = 1 then [[]]
-    else [] :: (setParts (n - 1))
-  in
 
   let rec divideList list parts =
     match list with
@@ -64,7 +29,9 @@ let splitNTail (n, list) =
     if n == 0 then listOfLists
     else setParts (n - 1, [] :: listOfLists)
   in
+
   let parts = setParts (n, []) in
+
   let rec divideList (list, parts, buffor) = 
     if list = [] then 
       if parts != [] then divideList([], List.tl parts, List.hd parts :: buffor)
@@ -75,5 +42,22 @@ let splitNTail (n, list) =
         let x = List.hd list :: (List.hd parts) in
         divideList (List.tl list, List.tl parts, x :: buffor)
   in
+
   divideList (list, parts, [])
 ;;
+
+splitNRec (3, [1;2;3;4;5;6]);;
+splitNRec (3, []);;
+splitNRec (3, [1]);;
+splitNRec (3, [1;2]);;
+splitNRec (3, [1;2;3]);;
+splitNRec (3, [1;2;3;4]);;
+splitNRec (4, ['a';'b';'c';'d';'e';'f';'g']);;
+
+splitNTail (3, [1;2;3;4;5;6]);;
+splitNTail (3, []);;
+splitNTail (3, [1]);;
+splitNTail (3, [1;2]);;
+splitNTail (3, [1;2;3]);;
+splitNTail (3, [1;2;3;4]);;
+splitNTail (4, ['a';'b';'c';'d';'e';'f';'g']);;
