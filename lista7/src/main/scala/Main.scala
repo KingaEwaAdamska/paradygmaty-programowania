@@ -7,45 +7,37 @@ object Main extends App {
   val sorter = new KitchenVisitor()
   
   val dirtyListScala = List(
-    new Spoon(), 
-    new Fork(), 
-    new Fork(), 
-    new Spoon(), 
-    new Plate(), 
-    new Bowl(),
-    new Pan(),
-    new Bowl(),
-    new Spoon(), 
-    new Fork(), 
-    new Plate(), 
-    new Plate(), 
-    new Bowl(),
-    new Pan(),
-    new Fork(), 
-    new Spoon(), 
-    new Plate(), 
-    new Fork(), 
-    new Spoon(), 
-    new Spoon()
+    new Spoon(), new Fork(), new Fork(), new Spoon(), new Plate(), 
+    new Bowl(), new Pan(), new Bowl(), new Spoon(), new Fork(), 
+    new Plate(), new Plate(), new Bowl(), new Pan(), new Fork(), 
+    new Spoon(), new Plate(), new Fork(), new Spoon(), new Spoon()
   )
   
-  val dirtyListJava = dirtyListScala.asJava
-
-  println("--- Elf wrzuca brudy do sortowni ---")
-  sorter.sort(dirtyListJava)
-
-  val dishwasher = new Dishwasher(maxCutlerySpace = 5, maxDishSpace = 10, maxCookwareSpace = 10)
-
+  sorter.sort(dirtyListScala.asJava)
+  println("--- Sorter started ---")
   sorter.displayCount()
-  println("--- Pierwsze ładowanie (limit sztućców: 2) ---")
-  dishwasher.fillAndRun(sorter)
+
+  val dishwashers = List(
+    new Dishwasher(1, 5, 10, 10),
+    new Dishwasher(2, 5, 10, 10),
+    new Dishwasher(3, 5, 10, 10)
+  )
+
+  println("--- Washing start ---")
+
+  while (!sorter.isEmpty()) {
+    val freeDishwasher = dishwashers.find(d => !d.isLocked)
+    
+    freeDishwasher match {
+      case Some(dw) => 
+        dw.fillAndRun(sorter)
+        sorter.displayCount()
+      case None => 
+        Thread.sleep(500)
+    }
+  }
+
+  println("--- All cleaned! ---")
   
-  sorter.displayCount()
-  println(s"Pozostałe widelce w sorterze: ${sorter.getForks.size()}")
-  
-  dishwasher.unlock()
-  
-  println("--- Drugie ładowanie (teraz weźmie resztę) ---")
-  dishwasher.fillAndRun(sorter)
-  sorter.displayCount()
+  Thread.sleep(4000) 
 }

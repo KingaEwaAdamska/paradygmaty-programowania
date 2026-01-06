@@ -57,14 +57,22 @@ public class KitchenVisitor {
         int totalBowls = bowls.size();
         int totalPans = pans.size();
         
-        System.out.println("=== Liczba nieposortowanych sztućców/naczyń ===");
-        System.out.println("Łyżki: " + totalSpoons);
-        System.out.println("Widelce: " + totalForks);
-        System.out.println("Talerze: " + totalPlates);
-        System.out.println("Miseczki: " + totalBowls);
-        System.out.println("Patelnie: " + totalPans);
-        System.out.println("Łącznie: " + 
+        System.out.println("==== Remaining ====");
+        System.out.println("Spoons: " + totalSpoons);
+        System.out.println("Forks: " + totalForks);
+        System.out.println("Plates: " + totalPlates);
+        System.out.println("Bowls: " + totalBowls);
+        System.out.println("Pans: " + totalPans);
+        System.out.println("Summary: " + 
             (totalSpoons + totalForks + totalPlates + totalBowls + totalPans));
-        System.out.println("==============================================");
+        System.out.println("===================");
+    }
+
+    public boolean isEmpty() {
+        return spoons.isEmpty() && 
+               forks.isEmpty() && 
+               plates.isEmpty() && 
+               bowls.isEmpty() && 
+               pans.isEmpty();
     }
 }

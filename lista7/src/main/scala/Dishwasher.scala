@@ -4,11 +4,12 @@ import lista7.java.KitchenVisitor
 import scala.jdk.CollectionConverters._
 
 class Dishwasher(
+  id: Integer,
   maxCutlerySpace: Integer,
   maxDishSpace: Integer,
   maxCookwareSpace: Integer
 ) {
-  private var isLocked: Boolean = false
+  @volatile var isLocked: Boolean = false
   private var cutleryUsed: Integer = 0
   private var dishesUsed: Integer = 0
   private var cookwareUsed: Integer = 0
@@ -38,7 +39,14 @@ class Dishwasher(
     cookwareUsed += takenPans.size * Config.panSize
 
     isLocked = true
-    println("Zmywarka wystartowała.")
+    println(s"Dishwasher $id: started.")
+    new Thread(new Runnable {
+      override def run(): Unit = {
+        Thread.sleep(Config.washDuration)
+        unlock()
+        println(s"Dishwasher$id: ended.")
+      }
+    }).start()
   }
 
   def unlock() {
