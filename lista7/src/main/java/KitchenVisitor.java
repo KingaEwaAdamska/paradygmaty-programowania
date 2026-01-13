@@ -4,29 +4,34 @@ import lista7.scala.*;
 import java.util.ArrayList;
 import java.util.List;
 
-public class KitchenVisitor {
+public class KitchenVisitor implements Visitor {
     private List<Spoon> spoons = new ArrayList<>();
     private List<Fork> forks = new ArrayList<>();
     private List<Plate> plates = new ArrayList<>();
     private List<Bowl> bowls = new ArrayList<>();
     private List<Pan> pans = new ArrayList<>();
 
+    @Override
     public void visit(Spoon spoon) {
         spoons.add(spoon);
     }
     
+    @Override
     public void visit(Fork fork) {
         forks.add(fork);
     }
     
+    @Override
     public void visit(Plate plate) {
         plates.add(plate);
     }
     
+    @Override
     public void visit(Bowl bowl) {
         bowls.add(bowl);
     }
     
+    @Override
     public void visit(Pan pan) {
         pans.add(pan);
     }
